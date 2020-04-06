@@ -1,100 +1,140 @@
-/*import React, { Component } from "react";
-import "./App.css";
-
-
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      person: [],
-      name: "",
-      sex:"",
-      age:"",
-      date_of_birth:"",
-      image_location:""
-    };
-  }
-
-  inputName = event => {
-    event.preventDefault();
-    this.setState({
-      name: event.target.value
-    });
-  };
-
-  inputSex = event => {
-    event.preventDefault();
-    this.setState({
-      sex: event.target.value
-    });
-  };
-render() {
-  return (
-    <div className="App">
-      <h1>Family Tree</h1>
-      <label>
-          Name
-          <input
-            onChange={this.inputName}
-            value={this.state.name}
-            type="text"
-          />
-        </label>
-        <label>
-          Sex
-          <input
-            onChange={this.inputSex}
-            value={this.state.sex}
-            type="text"
-          />
-        </label>
-    </div>
-  );
-}
-}
-
-export default App;
-*/
-
 import React from "react";
-import AdminView from "./components/adminView";
-import UserView from "./components/userView";
 import "./App.css";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      adminView: true, 
-      projects: [] };
-    
+     users: [],
+     name: "",
+     surname: "",
+     relationship:"",
+     description: ""
+    };
   }
 
   
-
-  addProject(newProject) {
-    this.setState({
-      projects: [...this.state.projects, newProject]
-    });
+  componentDidMount() {
+    this.getUsers();
   }
 
-  changeUser(isAdmin) {
-    this.setState({ adminView: isAdmin});
+  getUsers = () => {
+    fetch("/users/user")
+      .then(response => response.json())
+      .then(response => {
+        this.setState({ users: response });
+      });
+  };
+
+
+  addUser=()=> 
+  {
+    fetch("/users/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: this.state.name,
+        surname: this.state.surname,
+        relationship: this.state.relationship,
+        description: this.state.description
+    })
+    })
+
+      .then(res => res.json())
+      .then(response => {
+        this.setState({
+          user: response
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  buttonClicked() // = event => 
+  {
+      this.addMember({
+      name: this.state.name,
+      surname: this.state.surname,
+      relationship: this.state.relationship,
+      description: this.state.description
+      })
+  }
+
+  addMember(newMember) {
+    this.setState({
+      users: [...this.state.users, newMember]
+    });    
+  }
+
+  
+  inputChanged = event => {
+    //const value = event.target.value;
+    const name = event.target.name;
+    event.preventDefault();
+    this.setState({
+      [name]: event.target.value 
+    })
   }
 
   render() {
     return (
-      <div> 
-        <button className= {this.state.adminView ? "btn btn-info " : null} onClick={() => this.changeUser(true)} >ADMIN</button>
+      <div className="card border-info mb-3 text-center col-sm-3 position-center">
+      <img className="card-img-top" src="https://cdn.mos.cms.futurecdn.net/jmcLjPTPwnHFT2gyPjmvye-650-80.jpg" alt="Card"></img>
+     
+     <form>
+       <label>
+          Name
+          <input type="text" name="name" 
+         onChange={e => this.inputChanged(e)} />
+       </label>
 
-        <button className= {!this.state.adminView ? "btn btn-info" : null} onClick={() => this.changeUser(false)} >USER</button>
-        { this.state.adminView ? 
-        (<AdminView addProject={newProject => this.addProject(newProject)} />) // anything inlined here (an attribute in html) is a prop. This prop is a function that triggers something in the parent. AND THE PROPS ARE ARGUMENTS TO A FUNCTION EX.: FUNCTION ADMINVIEW (ADDPROJECT) if addProject is more than one thing, React will compress it in an object. 
-        : (<UserView myProjects = {this.state.projects} /> )}
-      </div>
+       <label>
+          Surname
+          <input type="text" name="surname" 
+          onChange={e => this.inputChanged(e)} />
+       </label>
+       
+       <label>
+          Relationship
+          <input type="text" name="relationship" 
+          onChange={e => this.inputChanged(e)} />
+       </label>
+
+       <label>
+          Description
+          <textarea type="text" name="description"  
+          onChange={e => this.inputChanged(e)} >
+          </textarea>
+         </label>
+      </form>
+      
+     <button className="btn btn-secondary" 
+      onClick={() => this.addUser()}>Click here!</button>
+
+      <div>
+         {this.state.users.map((user, index)=> 
+           {
+             return(
+                <div key={index}> 
+                <span>
+                <ul>
+              <li>{user.name + " "}</li>
+              <li>{user.surname + " "} </li>
+              <li>{user.relationship + " "} </li>
+              <li>{user.description} </li>
+              </ul>
+                </span>
+                </div>
+             );
+           }         
+       )}
+       </div>
+   </div>
     );
   }
 }
 export default App;
- //or for the buttons: this.state.adminView && "btn btn-secondary btn-sm" 
-
+ 

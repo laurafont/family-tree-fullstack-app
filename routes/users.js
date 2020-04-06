@@ -2,7 +2,70 @@ var express = require('express');
 var router = express.Router();
 const db = require("../model/helper");
 
+// GET user listing
+router.get('/user', function(req, res, next) {
+  db("SELECT * FROM user;")
+  .then(results => {
+    res.send(results.data);
+  })
+  .catch(err => res.status(500).send(err));
+});
 
+// GET one user
+router.get("/user/:id", function(req, res, next) {
+  db(`SELECT * FROM user WHERE id=${req.params.id};`)
+    .then(results => {
+      res.send(results.data);
+    })
+    .catch(err => res.status(500).send(err));
+});
+
+
+// INSERT a new user into the DB
+router.post("/user", function(req, res, next) {
+  db(
+    `INSERT INTO user (name, surname, relationship, description) VALUES
+    ('${req.body.name}', '${req.body.surname}', '${req.body.relationship}', '${req.body.description}');`
+  )
+    .then(results => {
+      if (results.error) {
+        res.status(404).send({ error: results.error });
+      } else {
+        res.send({ body: results.data });
+      }
+    })
+    .catch(err => res.status(500).send(err));
+});
+
+
+//UPDATE an user from the DB
+router.put("/user/:id", function(req, res, next) {
+  db(`UPDATE user set name='${req.body.name}', '${req.body.surname}', '${req.body.relationship}', '${req.body.description}'
+  WHERE id=${req.params.id};`)
+  .then(results => {
+    if (results.error) {
+      res.status(404).send({ error: results.error });
+    } else {
+      res.send({ body: results.data });
+    }
+  })
+  .catch(err => res.status(500).send(err));
+});
+
+// DELETE an user from the DB
+router.delete("/user/:id", function(req, res, next) {
+  db(`DELETE from user WHERE id=${req.params.id};`)
+    .then(results => {
+      if (results.error) {
+        res.status(404).send({ error: results.error });
+      } else {
+        res.send({ body: results.data });
+      }
+    })
+    .catch(err => res.status(500).send(err));
+});
+
+/*
 // GET person listing
 router.get('/person', function(req, res, next) {
   db("SELECT * FROM person;")
@@ -247,5 +310,5 @@ router.delete("/parents/:id", function(req, res, next) {
     })
     .catch(err => res.status(500).send(err));
 });
-
+*/
 module.exports = router;
