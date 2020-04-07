@@ -3,11 +3,12 @@ Who is that?
 
 ## Getting Started
 
-### Flow diagram
+![Flow diagram]() 
 
-### Database schema
+![Database schema](link-to-image)
 
-### API routes plan
+![API routes plan](link-to-image)
+
 
 
 
