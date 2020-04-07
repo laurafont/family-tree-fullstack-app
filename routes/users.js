@@ -65,7 +65,7 @@ router.delete("/user/:id", function(req, res, next) {
     .catch(err => res.status(500).send(err));
 });
 
-/*
+
 // GET person listing
 router.get('/person', function(req, res, next) {
   db("SELECT * FROM person;")
@@ -310,5 +310,5 @@ router.delete("/parents/:id", function(req, res, next) {
     })
     .catch(err => res.status(500).send(err));
 });
-*/
+
 module.exports = router;
