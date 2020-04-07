@@ -71,7 +71,7 @@ class App extends React.Component {
   updateUser = i => {
     fetch(`/users/user/${i}`, {
       method: 'PUT',
-      headers: {
+      /*headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -80,8 +80,9 @@ class App extends React.Component {
         relationship: this.state.relationship,
         description: this.state.description
     })
+    */
     })
-      .then(res => res.json())
+     .then(res => res.json())
       .then(response => {
         this.setState({
           user: response
@@ -127,7 +128,7 @@ class App extends React.Component {
 
      <form>
        <label>
-          Name
+         Name
           <input className="form-control" type="text" name="name" 
          onChange={e => this.inputChanged(e)} />
        </label>
@@ -148,7 +149,6 @@ class App extends React.Component {
           Description
           <input className="form-control" type="text" name="description"  
           onChange={e => this.inputChanged(e)} />
-          
        </label>
       </form>
       
@@ -159,19 +159,20 @@ class App extends React.Component {
          {this.state.users.map((user, index)=> 
            {
              return(
+               <div className="list-group-item align-items-center">
                 <div key={index}> 
                 <span>
                 <ul>
-              <li>{user.name + " "}</li>
-              <li>{user.surname + " "} </li>
+              <li>{user.name + " "}{user.surname + " "}</li>
               <li>{user.relationship + " "} </li>
               <li>{user.description} </li>
               </ul>
                 </span>
-                <button onClick={() =>
+                </div>
+                <button className="btn btn-outline-danger ml2" onClick={() =>
                 this.deleteUser(user.id)}>Delete
                 </button>
-                <button onClick={() =>
+                <button className="btn btn-outline-primary ml2"onClick={() =>
                 this.updateUser(user.id)}>Update
                 </button>
                 
