@@ -71,7 +71,7 @@ class App extends React.Component {
   updateUser = i => {
     fetch(`/users/user/${i}`, {
       method: 'PUT',
-      /*headers: {
+      headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -80,7 +80,7 @@ class App extends React.Component {
         relationship: this.state.relationship,
         description: this.state.description
     })
-    */
+    
     })
      .then(res => res.json())
       .then(response => {
