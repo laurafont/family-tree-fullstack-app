@@ -1,6 +1,6 @@
 # Project 
 Who is that? 
-Application where family members can create their own family tre and in general their family memories
+Application where family members can create their own family tree and in general their family memories
 
 ## Getting Started
 
