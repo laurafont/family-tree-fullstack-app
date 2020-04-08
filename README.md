@@ -1,6 +1,6 @@
 # Who is that?
  
-The idea is to have an application where family members can create their own family tree and in general their family memories
+Application where family members can create their own family tree and in general their family memories
 
 ## Getting Started
 
@@ -9,12 +9,17 @@ The idea is to have an application where family members can create their own fam
 - Cd client, yarn install and yarn start to install React
 
 ### Database
+- Created MySQL database
+- Created .env file in the root folder to keep information about mySQL autentication, DB_HOST, DB_USER, DB_NAME, DB_PASS. In file database.js update information according to info in your .env file
+- Installed an extension for MySQL in your code editor(Visual Studio) to avoid migrate the database 
 
 ### Flow diagram
+![Flow diagram](mvpdonatella\Images\New User Flow.png)
 
 ### Database schema
 - Started with building one database with multiple tables. 
 - Later on, created a simple table (user) not connected with the other ones to try the fetch method
+
 ![Database schema](mvpdonatella\Images\Captureee.PNG)
 
 ### API routes plan
@@ -23,7 +28,8 @@ Api routes plan for the simple table(user)
 
 
 ### Future features
-- Section for items(pictures, music, etc.)
+- Log in form
+- Sections for items(pictures, music, history, etc.)
 - Option for connecting and sharing information with other members
 
 ### Technologies
