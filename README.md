@@ -14,7 +14,8 @@ Application where family members can create their own family tree and in general
 - Installed an extension for MySQL in your code editor(Visual Studio) to avoid migrate the database 
 
 ### Flow diagram
-![Flow diagram](mvpdonatella\Images\New User Flow.png)
+
+![User Flow Diagram](mvpdonatella\Images\NewUserFlow.PNG) 
 
 ### Database schema
 - Started with building one database with multiple tables. 
