@@ -68,6 +68,7 @@ class App extends React.Component {
       });
   };
 
+  /*
   updateUser = i => {
     fetch(`/users/user/${i}`, {
       method: 'PUT',
@@ -80,6 +81,7 @@ class App extends React.Component {
         relationship: this.state.relationship,
         description: this.state.description
     })
+  
     
     })
      .then(res => res.json())
@@ -93,6 +95,7 @@ class App extends React.Component {
       });
     }
 
+    */
 
   buttonClicked() // = event => 
   {
