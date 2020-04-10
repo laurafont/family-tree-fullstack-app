@@ -109,8 +109,8 @@ export default class NewUser extends Component {
     render() {
         return (
             <div>
-            <div>
-               <h4>Create new user</h4>
+            <div className="container mt-4">
+               <h4 className="display-4">Create new user</h4>
           <br/>
           <form>
           <label>
@@ -137,11 +137,11 @@ export default class NewUser extends Component {
               onChange={e => this.inputChanged(e)} />
           </label>
           </form>
-          
-          <button className="btn btn-secondary" 
+          <br/>
+          <button className="btn btn-info" 
           onClick={() => this.addUser()}>Create profile</button> 
             </div>
-
+          <br/>
             <div>
                 <div>
                     {this.state.users.map((user, index) => 

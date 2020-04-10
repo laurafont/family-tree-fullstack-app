@@ -11,7 +11,7 @@ function getUsers(req, res) {
     .catch(err => res.status(500).send(err));
 }
 
-function getPersons(req, res) {
+function getPeople(req, res) {
   db("SELECT * FROM person;")
     .then(results => {
       res.send(results.data);
@@ -41,7 +41,14 @@ router.get("/user", getUsers);
 
 
 // GET one user
-router.get("/user/:id", getOneUser);
+router.get("/user/:id", function(req, res, next) {
+  db(`SELECT * FROM user WHERE id=${req.params.id};`)
+    .then(results => {
+      res.send(results.data);
+    })
+    .catch(err => res.status(500).send(err));
+});
+
 
 
 // INSERT a new user into the DB
@@ -86,7 +93,7 @@ router.delete("/user/:id", function(req, res, next) {
 
 
 // GET person listing
-router.get("/person", getPersons);
+router.get("/person", getPeople);
 
 // GET one person
 router.get("/person/:id", function(req, res, next) {
@@ -96,6 +103,16 @@ router.get("/person/:id", function(req, res, next) {
     })
     .catch(err => res.status(500).send(err));
 });
+
+// GET one person by user_id
+router.get("/user/:id/person", function(req, res, next) {
+  db(`SELECT * FROM person WHERE user_id=${req.params.id};`)
+    .then(results => {
+      res.send(results.data);
+    })
+    .catch(err => res.status(500).send(err));
+});
+
 
 // INSERT a new person into the DB
 router.post("/person", function(req, res, next) {
@@ -107,7 +124,7 @@ router.post("/person", function(req, res, next) {
       if (results.error) {
         res.status(404).send({ error: results.error });
       } else {
-        getPersons(req, res);
+        getPeople(req, res);
       }
     })
     .catch(err => res.status(500).send(err));
@@ -115,13 +132,13 @@ router.post("/person", function(req, res, next) {
 
 //UPDATE a person from the DB
 router.put("/person/:id", function(req, res, next) {
-  db(`UPDATE person set name='${req.body.name}', sex='${req.body.sex}', age='${req.body.age}', image_location='${req.body.image_location}', date_of_birth='${req.body.date_of_birth}'
+  db(`UPDATE person set name='${req.body.name}', sex='${req.body.sex}', age='${req.body.age}', image='${req.body.image}', date_of_birth='${req.body.date_of_birth}', location='${req.body.location}', relationship_id='${req.body.relationship_id}', user_id='${req.body.user_id}'
   WHERE id=${req.params.id};`)
   .then(results => {
     if (results.error) {
       res.status(404).send({ error: results.error });
     } else {
-      res.send({ body: results.data });
+      getPeople(req, res);
     }
   })
   .catch(err => res.status(500).send(err));
@@ -134,7 +151,7 @@ router.delete("/person/:id", function(req, res, next) {
       if (results.error) {
         res.status(404).send({ error: results.error });
       } else {
-        res.send({ body: results.data });
+        getPeople(req, res);
       }
     })
     .catch(err => res.status(500).send(err));
