@@ -2,51 +2,70 @@ var express = require('express');
 var router = express.Router();
 const db = require("../model/helper");
 
-// GET user listing
-router.get('/user', function(req, res, next) {
-  db("SELECT * FROM user;")
-  .then(results => {
-    res.send(results.data);
-  })
-  .catch(err => res.status(500).send(err));
-});
 
-// GET one user
-router.get("/user/:id", function(req, res, next) {
-  db(`SELECT * FROM user WHERE id=${req.params.id};`)
+function getUsers(req, res) {
+  db("SELECT * FROM user;")
     .then(results => {
       res.send(results.data);
     })
     .catch(err => res.status(500).send(err));
-});
+}
+
+function getPersons(req, res) {
+  db("SELECT * FROM person;")
+    .then(results => {
+      res.send(results.data);
+    })
+    .catch(err => res.status(500).send(err));
+}
+
+function getOneUser(req, res) {
+  db(`SELECT * FROM user WHERE id=${res.params.id};`)
+    .then(results => {
+      res.send(results.data);
+    })
+    .catch(err => res.status(500).send(err));
+}
+
+/* function getUser(req, res) {
+  db(`select id from user where name="${req.body.name}";`)
+  .then(results => {
+    res.getOneUser(req, res);
+    })
+  .catch(err => res.status(500).send(err));
+} */
+
+
+// GET user listing
+router.get("/user", getUsers);
+
+
+// GET one user
+router.get("/user/:id", getOneUser);
 
 
 // INSERT a new user into the DB
 router.post("/user", function(req, res, next) {
   db(
-    `INSERT INTO user (name, surname, relationship, description) VALUES
-    ('${req.body.name}', '${req.body.surname}', '${req.body.relationship}', '${req.body.description}');`
+    `INSERT INTO user (name, surname, email, birth) VALUES
+    ('${req.body.name}', '${req.body.surname}', '${req.body.email}', '${req.body.birth}');`
   )
-    .then(results => {
-      if (results.error) {
-        res.status(404).send({ error: results.error });
-      } else {
-        res.send({ body: results.data });
-      }
-    })
-    .catch(err => res.status(500).send(err));
+  .then(results => {
+    getUsers(req, res);
+  })
+  .catch(err => res.status(500).send(err));
 });
 
 
 //UPDATE an user from the DB
 router.put("/user/:id", function(req, res, next) {
-  db(`UPDATE user set name='${req.body.name}', '${req.body.surname}', '${req.body.relationship}', '${req.body.description}'
+  db(`UPDATE user set name='${req.body.name}', surname='${req.body.surname}', email='${req.body.email}', birth='${req.body.birth}'
   WHERE id=${req.params.id};`)
   .then(results => {
     if (results.error) {
       res.status(404).send({ error: results.error });
     } else {
-      res.send({ body: results.data });
+      getUsers(req, res);
     }
   })
   .catch(err => res.status(500).send(err));
@@ -59,7 +78,7 @@ router.delete("/user/:id", function(req, res, next) {
       if (results.error) {
         res.status(404).send({ error: results.error });
       } else {
-        res.send({ body: results.data });
+        getUsers(req, res);
       }
     })
     .catch(err => res.status(500).send(err));
@@ -67,13 +86,7 @@ router.delete("/user/:id", function(req, res, next) {
 
 
 // GET person listing
-router.get('/person', function(req, res, next) {
-  db("SELECT * FROM person;")
-  .then(results => {
-    res.send(results.data);
-  })
-  .catch(err => res.status(500).send(err));
-});
+router.get("/person", getPersons);
 
 // GET one person
 router.get("/person/:id", function(req, res, next) {
@@ -87,14 +100,14 @@ router.get("/person/:id", function(req, res, next) {
 // INSERT a new person into the DB
 router.post("/person", function(req, res, next) {
   db(
-    `INSERT INTO person (name, sex, age, image_location, date_of_birth) VALUES
-    ('${req.body.name}', '${req.body.sex}', '${req.body.age}', '${req.body.image_location}', '${req.body.date_of_birth}');`
+    `INSERT INTO person (name, sex, age, image, date_of_birth, location, relationship_id, user_id) VALUES
+    ('${req.body.name}', '${req.body.sex}', '${req.body.age}', '${req.body.image}', '${req.body.date_of_birth}', '${req.body.location}', '${req.body.relationship_id}', '${req.body.user_id}');`
   )
     .then(results => {
       if (results.error) {
         res.status(404).send({ error: results.error });
       } else {
-        res.send({ body: results.data });
+        getPersons(req, res);
       }
     })
     .catch(err => res.status(500).send(err));
