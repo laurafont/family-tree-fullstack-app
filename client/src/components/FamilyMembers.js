@@ -14,9 +14,9 @@ export default class FamilyMembers extends Component {
 
     componentDidMount() {
       this.getMembers();
-      this.setState({
+/*       this.setState({
         user_id: this.props.userId
-      })      
+      })   */    
     }  
 
     getMembers = () => {      
@@ -92,20 +92,31 @@ export default class FamilyMembers extends Component {
                 <h3 className="display-4">Your Family</h3>
                 <br/>
                 <div className="row">                   
-                {this.state.members.map((member, index) => {
-                      return (
-                      <div key={index} className="card"> 
+                  {this.state.members.map((member, index) => {
+                    return (
+                      <div key={index} className="card shadow"> 
                         <img src={member.image} className="card-img-top" style={{width: 18 + "rem"}} alt="..."/>
-                        {this.state.editing !== index ? <Edit userId={this.state.user_id}  members={this.state.members} /> : "No"}
-
-                        <div className="card-body">
-                            <button className="card-link" onClick={() => this.edit(index)}>Edit</button>
-                            <button className="card-link" onClick={() => this.deletePerson(member.id)}>Delete</button>
+                        <div className="card-bod">
+                            <h5 className="card-title mt-3">{member.name}</h5>
+                            {this.state.relationships && this.state.relationships.map((relationship, index) => {
+                              return (
+                                <p key={index} className="card-text">{relationship.id === member.relationship_id ? relationship.type : null}</p>
+                              );})}
                         </div>
-                        
+                        <ul className="list-group list-group-flush">
+                            <li className="list-group-item">{member.sex}</li>
+                            <li className="list-group-item">{member.age} years old</li>
+                            <li className="list-group-item">From {member.location}</li>
+                            <li className="list-group-item">Birthday: {member.date_of_birth}</li>
+                        </ul>
+                      
+                      <div className="card-body">
+                          <button className="card-link" onClick={() => this.edit(index)}>Edit</button>
+                          <button className="card-link" onClick={() => this.deletePerson(member.id)}>Delete</button>
+                      </div>                    
                       </div>
                     );
-                })}
+                  })}
                 </div>
             </div>
         )

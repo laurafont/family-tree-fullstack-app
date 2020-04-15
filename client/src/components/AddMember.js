@@ -71,7 +71,7 @@ export default class AddMember extends Component {
                 <br/>
                 <form>
                     <div className="form-group row">
-                      <label className="col-sm-2 col-form-label">Name</label>
+                      <label className="col-sm-3 col-form-label text-left">Name</label>
                         <div className="col-sm-8">
                             <input className="form-control"
                             type="text"
@@ -81,7 +81,7 @@ export default class AddMember extends Component {
                         </div>
                     </div>
                     <div className="form-group row">
-                      <label className="col-sm-2 col-form-label">Age</label>
+                      <label className="col-sm-3 col-form-label text-left">Age</label>
                         <div className="col-sm-8">
                             <input className="form-control"
                             type="text"
@@ -91,7 +91,7 @@ export default class AddMember extends Component {
                         </div>
                     </div>
                     <div className="form-group row">
-                      <label className="col-sm-2 col-form-label">Location</label>
+                      <label className="col-sm-3 col-form-label text-left">Location </label>
                         <div className="col-sm-8">
                             <input className="form-control"
                             type="text"
@@ -101,12 +101,12 @@ export default class AddMember extends Component {
                         </div>
                     </div>
                     <div className="form-group row">
-                      <label className="col-sm-2 col-form-label">Relationship</label>
+                      <label className="col-sm-3 col-form-label text-left">Relation </label>
                         <div className="col-sm-8">
                           <select className="custom-select mr-sm-2"
                             name="relationship_id" 
                             onChange={e => this.inputChanged(e)}>
-                                <option selected>Select type of relationship</option>
+                                <option selected>Type of relationship</option>
                                 <option value="1">Parent</option>
                                 <option value="2">Sibling</option>
                                 <option value="3">Grandparent</option>
@@ -121,12 +121,12 @@ export default class AddMember extends Component {
                         </div>
                     </div>
                     <div className="form-group row">
-                      <label className="col-sm-2 col-form-label">Sex</label>
+                      <label className="col-sm-3 col-form-label text-left">Gender</label>
                         <div className="col-sm-8">
                           <select className="custom-select mr-sm-2"
                             name="sex" 
                             onChange={e => this.inputChanged(e)}>
-                                <option selected>Select sex</option>
+                                <option selected>Select gender</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                                 <option value="Non-binary">Non-binary</option>
@@ -134,7 +134,7 @@ export default class AddMember extends Component {
                         </div>
                     </div>
                     <div className="form-group row">
-                      <label className="col-sm-2 col-form-label">Image</label>
+                      <label className="col-sm-3 col-form-label text-left">Image</label>
                         <div className="col-sm-8">
                           <input className="form-control"
                             type="text"
@@ -144,11 +144,11 @@ export default class AddMember extends Component {
                         </div>
                     </div>
                     <div className="form-group row">
-                      <label className="col-sm-2 col-form-label">Date of birth</label>
+                      <label className="col-sm-3 col-form-label text-left">Birthday</label>
                         <div className="col-sm-8">
                         <input className="form-control"
                             type="text"
-                            placeholder="Insert data"
+                            placeholder="Insert date"
                             name="date_of_birth"
                             onChange={e => this.inputChanged(e)}/>
                         </div>

@@ -109,38 +109,40 @@ export default class NewUser extends Component {
     render() {
         return (
             <div>
-            <div className="container mt-4">
-               <h4 className="display-4">Create new user</h4>
+            <div className="container mt-5">
+               <h4 className="display-4">Create your family tree</h4>
           <br/>
+
           <form>
           <label>
-            Name
-              <input className="form-control" type="text" name="name" 
+            
+              <input className="form-control" type="text" name="name" placeholder="Name"
             onChange={e => this.inputChanged(e)} />
           </label>
   
           <label>
-              Surname
-              <input className="form-control" type="text" name="surname" 
+              
+              <input className="form-control" type="text" name="surname" placeholder="Surname"
               onChange={e => this.inputChanged(e)} />
           </label>
           
           <label>
-              Email
-              <input className="form-control" type="text" name="email" 
+              
+              <input className="form-control" type="text" name="email" placeholder="Email" 
               onChange={e => this.inputChanged(e)} />
           </label>
   
           <label>
-              Date of birth
-              <input className="form-control" type="text" name="birth"  
+              
+              <input className="form-control" type="text" name="birth" placeholder="Date of birth"  
               onChange={e => this.inputChanged(e)} />
           </label>
           </form>
           <br/>
           <button className="btn btn-info" 
-          onClick={() => this.addUser()}>Create profile</button> 
+          onClick={() => this.addUser()}>Create new profile</button> 
             </div>
+          <br/>
           <br/>
             <div>
                 <div>
@@ -148,19 +150,19 @@ export default class NewUser extends Component {
                     {   
                     return(
                     <div className="list-group-item align-items-center">
-                    <div key={index}> 
-                    <span>
-                        <ul>
-                        <li>{user.name + " "}{user.surname + " "}</li>
-                        <li>{user.email + " "} </li>
-                        <li>{user.birth} </li>
-                        </ul>
-                    </span>
-                    <Link to={`/profile/${user.id}`}><button className="btn btn-outline-primary ml2">Access profile
-                    </button></Link>
-                    <button className="btn btn-outline-danger ml2"onClick={() => this.deleteUser(user.id)}>Delete
-                    </button>
-                    </div>
+                      <div key={index}> 
+                       
+                            <ul className="mt-2">
+                              <li className="h4">{user.name + " "}{user.surname + " "}</li>
+                              <li>{user.email} </li>
+                              <li className="font-italic">{user.birth} </li>
+                            </ul>
+                        <div className="mb-2">
+                          <Link to={`/profile/${user.id}`}><button className="btn btn-outline-primary">Access</button></Link>
+                          <span> </span>
+                          <button className="btn btn-outline-danger"onClick={() => this.deleteUser(user.id)}>Delete</button>
+                        </div>
+                      </div>
                     </div>
                     );
                     }         

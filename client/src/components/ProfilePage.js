@@ -27,21 +27,21 @@ export default class ProfilePage extends Component {
 
     render() {
         return (
-            <div class= "container">
+            <div class= "container mt-4">
                 <div className="row">
-                    <div className="span12">
+
                         <br/>
                         <div className="row">
-                            <div className="span4">
+                            <div className="span5">
                                 <h3>{this.state.userData.name} {this.state.userData.surname}</h3>
                             <br/>
                             <AddMember userId={this.props.match.params.id}/>
                             </div>
-                            <div className="span8">
+                            <div className="span10">
                                 <FamilyMembers userId={this.props.match.params.id}/>
                             </div>
                         </div>
-                    </div>     
+   
                 </div>
             </div>
         )
