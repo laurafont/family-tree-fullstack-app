@@ -19,6 +19,18 @@ function getPeople(req, res) {
     .catch(err => res.status(500).send(err));
 }
 
+function getRelationships(req, res) {
+  db("SELECT * FROM relationship;")
+    .then(results => {
+      res.send(results.data);
+    })
+    .catch(err => res.status(500).send(err));
+}
+
+// GET relationship listing
+router.get("/relationship", getRelationships);
+
+
 function getOneUser(req, res) {
   db(`SELECT * FROM user WHERE id=${res.params.id};`)
     .then(results => {

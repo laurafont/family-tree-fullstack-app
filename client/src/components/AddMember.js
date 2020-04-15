@@ -12,12 +12,12 @@ export default class AddMember extends Component {
             date_of_birth: null,
             location: "",
             relationship_id: null,
-            user_id: 43,
+            user_id: null,
             members: []
         };
     }
 
-/*      componentDidMount() {
+      componentDidMount() {
       console.log( this.props.userId);
         this.getUser();
       }
@@ -26,7 +26,7 @@ export default class AddMember extends Component {
       this.setState({
         user_id: this.props.userId 
       })
-    };  */
+    };  
     
     inputChanged = event => {
         //const value = event.target.value;

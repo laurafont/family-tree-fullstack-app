@@ -35,10 +35,10 @@ export default class ProfilePage extends Component {
                             <div className="span4">
                                 <h3>{this.state.userData.name} {this.state.userData.surname}</h3>
                             <br/>
-                            <AddMember userId={this.state.userData.id}/>
+                            <AddMember userId={this.props.match.params.id}/>
                             </div>
                             <div className="span8">
-                                <FamilyMembers userId={this.state.userData.id}/>
+                                <FamilyMembers userId={this.props.match.params.id}/>
                             </div>
                         </div>
                     </div>     

@@ -1,27 +1,40 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import Edit from './Edit';
 
 export default class FamilyMembers extends Component {
     constructor(props) {
         super(props);
         this.state = {
             members: [],
-            user_id: null
+            relationships: null,
+            user_id: null,
+            editing: null
         }
     }
 
     componentDidMount() {
-        console.log(this.props.userId)
-        this.getMembers();
-    }
-    
+      this.getMembers();
+      this.setState({
+        user_id: this.props.userId
+      })      
+    }  
 
     getMembers = () => {      
-        fetch(`/users/user/43/person`)
+        fetch(`/users/user/${this.props.userId}/person`)
           .then(response => response.json())
           .then(response => {
             this.setState({ members: response });
           });
+        this.getRelationships(); 
     };
+
+    getRelationships = () => {      
+      fetch(`/users/relationship`)
+        .then(response => response.json())
+        .then(response => {
+          this.setState({ relationships: response });
+        });
+  };
 
     deletePerson = i => {
         fetch(`/users/person/${i}`, {
@@ -66,6 +79,13 @@ export default class FamilyMembers extends Component {
           });
     }
 
+    edit(i) {
+      this.setState({
+        editing: i
+      })
+      console.log(i)
+    }
+
     render() {
         return (
             <div className="container">
@@ -76,19 +96,13 @@ export default class FamilyMembers extends Component {
                       return (
                       <div key={index} className="card"> 
                         <img src={member.image} className="card-img-top" style={{width: 18 + "rem"}} alt="..."/>
-                        <div className="card-bod">
-                            <h5 className="card-title">{member.name}</h5>
-                            <p className="card-text">Description</p>
-                        </div>
-                        <ul className="list-group list-group-flush">
-                            <li className="list-group-item">Sex: {member.sex}</li>
-                            <li className="list-group-item">Age: {member.age}</li>
-                            <li className="list-group-item">Location: {member.location}</li>
-                        </ul>
+                        {this.state.editing !== index ? <Edit userId={this.state.user_id}  members={this.state.members} /> : "No"}
+
                         <div className="card-body">
-                            <button className="card-link" onClick={() => this.updatePerson(member.id)}>Edit</button>
+                            <button className="card-link" onClick={() => this.edit(index)}>Edit</button>
                             <button className="card-link" onClick={() => this.deletePerson(member.id)}>Delete</button>
                         </div>
+                        
                       </div>
                     );
                 })}
